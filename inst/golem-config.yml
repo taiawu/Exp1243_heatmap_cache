@@ -1,0 +1,8 @@
+default:
+  golem_name: Exp1243_heatmap_cache
+  golem_version: 0.0.0.9000
+  app_prod: no
+production:
+  app_prod: yes
+dev:
+  golem_wd: !expr here::here()
