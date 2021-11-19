@@ -18,7 +18,9 @@ app_server <- function(input, output, session) {
   
   output$mock_raw_plot <- 
     renderPlot({
-      random_ggplot(type = "line")
+      req(input$plot_hover) # take reactive dependency 
+      random_ggplot(type = "line") +
+        labs(title = input$plot_hover)
     })
   
   output$mock_text <- 

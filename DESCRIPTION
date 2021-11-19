@@ -10,17 +10,22 @@ Description: What the package does (one paragraph).
 License: What license is it under?
 Imports: 
     attempt,
+    ChemmineR,
     config (>= 0.3.1),
+    devtools,
     dplyr,
     DT,
     ggplot2,
     glue,
     golem (>= 0.3.1),
     htmltools,
+    magrittr,
     processx,
     shinipsum,
     shiny (>= 1.7.1),
-    shinyipsum
+    shinyjs,
+    shinyWidgets,
+    usethis
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

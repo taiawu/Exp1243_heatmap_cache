@@ -40,7 +40,7 @@ app_ui <- function(request) {
                       
                        
                       panel(style = "overflow-y:scroll; max-height: 600px; position:relative; align: centre",
-                            plotOutput("mock_raw_plot", hover = hoverOpts("raw_plot_hover", delay = 200, nullOutside = FALSE)), 
+                            plotOutput("mock_raw_plot", hover = hoverOpts("raw_plot_hover", delay = 200, nullOutside = TRUE)), 
                             uiOutput("raw_hover_info"),
                            
                             h3("Methods"),
