@@ -1,0 +1,26 @@
+---
+title: "Heatmap report downloader"
+output: pdf_document
+params:
+  n: NA
+---
+
+This report was generated with the shiny app
+```{r eval = FALSE, echo = FALSE}
+# For PDF output, change the header to have "output: pdf_document".
+#
+# Note that due to an issue in rmarkdown, the default value of a parameter in
+# the header cannot be `NULL`, so I used a default of `NA` for the default value
+# of `n`.
+```
+
+```{r}
+# The `params` object is available in the document.
+params$n
+```
+
+```{r}
+# The plots themselves have to be regenerated in the markdown (annoying)
+# so define the plotting function, and then pass the data to this rmd to show the plots
+```
+
