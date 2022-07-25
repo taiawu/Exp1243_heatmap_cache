@@ -44,8 +44,9 @@ app_ui <- function(request) {
                             uiOutput("raw_hover_info"),
                            
                             h3("Methods"),
-                            tableOutput("mock_text"),
-                             plotOutput("chem_struc")
+                            tableOutput("mock_text")
+                            # ,
+                            #  plotOutput("chem_struc")
                             # ,
                             # heading = "Education", status = "primary")
                       ) # panel
