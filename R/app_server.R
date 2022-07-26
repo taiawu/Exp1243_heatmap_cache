@@ -34,9 +34,30 @@ app_server <- function(input, output, session) {
   output$mock_protein_title <- 
     renderText({
       if(!is.null(input$plot_hover)){
-        input$plot_hover$x} else {
+        hover <- input$plot_hover
+        
+        point <- nearPoints(heatmap, 
+                            hover, 
+                            threshold = 5, 
+                            maxpoints = 1, 
+                            addDist = TRUE)
+        print(point$protein_f)
+        paste0(point$protein_f,", ", point$dye_f)
+        #point$protein_f
+        #unique(point$protein_f) # add also dye name here
+        
+        #if (nrow(point) == 0) return(NULL)
+
+        
+        } else {
           ""
         }
+
+      ## ipsum app verision -- working at time of comment
+      # if(!is.null(input$plot_hover)){
+      #   input$plot_hover$x} else {
+      #     ""
+      #   }
     })
   
   output$mock_text_header <- 
