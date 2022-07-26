@@ -1,5 +1,5 @@
 Package: Exp1243_heatmap_cache
-Title: An Amazing Shiny App
+Title: paDSF explorer
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "firstname",
@@ -34,3 +34,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Language: en-US
+Depends: 
+    R (>= 2.10)
