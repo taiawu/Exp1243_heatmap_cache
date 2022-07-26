@@ -13,7 +13,9 @@ app_server <- function(input, output, session) {
 
   output$mock_heatmap <- 
     renderPlot({
-    random_ggplot(type = "tile")
+      heatmap_ggproto ## loaded as package data
+      # for ipsum app
+    ##random_ggplot(type = "tile")
   })
   
   output$mock_raw_plot <- 
