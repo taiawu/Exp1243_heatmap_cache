@@ -78,31 +78,38 @@ app_server <- function(input, output, session) {
       }
     })
   
+  protein_dye_raw <- reactive({
+    req(input$plot_hover) # hidden until mouseover data 
+    exp_num <- reactive(dye_protein_hover()$exp_num)
+    dye <- reactive(as.character(dye_protein_hover()$dye_f))
+    
+    if(dye_protein_hover()$assignment == "untested") { #  note untested tested combos
+      NULL
+    } else {
+      if (exp_num() %in% raw_screens$exp_num) {
+        if(dye() %in% raw_screens$dye) {
+          raw_data <- 
+            raw_screens %>%
+            filter(exp_num == exp_num(),
+                   dye == dye()) #
+        }
+      } else {
+        NULL
+      }
+    } 
+  })
+  
   
   output$mock_raw_plot <- 
     renderPlot({
       req(input$plot_hover) # hidden until mouseover data 
-      exp_num <- reactive(dye_protein_hover()$exp_num)
-      dye <- reactive(as.character(dye_protein_hover()$dye_f))
-     
-      if (exp_num() %in% raw_screens$exp_num) {
-        if(dye() %in% raw_screens$dye) {
-          raw_screens %>%
-            filter(exp_num == exp_num(),
-                   dye == dye()) %>%
-            # filter(exp_num == "Ds00010",
-            #        dye == "SYPRO") %>%
+      req(protein_dye_raw())
+
+      protein_dye_raw() %>%
             plot_raw(  . ,
                        .line_size = 0.6) +
-            hrbrthemes::theme_ipsum(base_size = 16)
-        }
-      } else {
-        NULL
-        # 
-        # plot_title <- reactive(paste0(exp_num(),dye()))
-        # random_ggplot(type = "tile")
-      }
-      
+            hrbrthemes::theme_ipsum(base_size = 16) +
+        theme(aspect.ratio = 1/1.617)
     })
   
   
@@ -126,16 +133,6 @@ app_server <- function(input, output, session) {
   
   output$methods <- 
     renderText({
-      # req(input$plot_hover) # take reactive dependency 
-      # hover <- input$plot_hover
-      # 
-      # point <- nearPoints(heatmap, 
-      #                     hover, 
-      #                     threshold = 5, 
-      #                     maxpoints = 1, 
-      #                     addDist = TRUE)
-      # 
-      # protein_f_read <- gsub(pattern = "_", replacement = " ", point$protein_f)
       req(input$plot_hover) # hidden until mouseover data 
       
       protein_f_read <- # reader-friendly protein name withought "_"
@@ -156,56 +153,31 @@ app_server <- function(input, output, session) {
       }
     })
 
-  # output$mock_text_header <- # not currently displayed
-  #   renderText({
-  #     "Mouse over the plot below to browse and download dye screen data and conditions."
-  #     #random_text(nwords = 50)
-  #   })
-  
-  # output$data_table <- 
-  #   DT::renderDT({
-  #     random_DT(5, 5, options = list(dom = 't'))
-  #     
-  #   })
+  # ### tooltip for raw data mouseovers
+  # # from https://gitlab.com/-/snippets/16220
+  # output$raw_hover_info <- renderUI({
+  #   req(dye_protein_hover()) # only show if right panel is active
+  #   req(input$raw_plot_hover) # only show if tooltip data are there
+  #   
+  #   point_raw <- 
+  #     nearPoints(protein_dye_raw(), # filtered data for raw plot panel
+  #                input$raw_plot_hover, # takes reactive dependency
+  #                threshold = 5, 
+  #                maxpoints = 1, 
+  #                addDist = TRUE)
   # 
-  # output$hover_info <- renderPrint({input$plot_hover
-  #   if(!is.null(input$plot_hover)){
-  #     input$plot_hover}
+  #     style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.2); ",
+  #                     "left:", input$raw_plot_hover$range$left, "px; top:", 
+  #                     input$raw_plot_hover$range$top+50, "px;")
   # 
-  # })
-  
-  # ### plot dye structure
-  # output$chem_struc <- 
-  #   renderPlot({
-  #     x <- runif(1, min = 1, max = 100)
-  #     data(sdfsample) 
-  #     sdfset <- sdfsample
-  #     plotStruc(sdfset[[x]], atomcex = 1)
+  #     # actual tooltip created as wellPanel
+  #     wellPanel(
+  #       style = style,
+  #       p(HTML(paste0("<b> Channel </b>", point_raw$channel_f, "<br/>",
+  #                     "<b> Dye </b>", point_raw$dye, "<br/>",
+  #                     "<b> Sample </b>", point_raw$type, "<br/>",
+  #                     "<b> Temperature </b>", point_raw$Temperature, " ºC"))))
   #   })
-  
-  ### tooltip for raw data mouseovers
-  # from https://gitlab.com/-/snippets/16220
-  output$raw_hover_info <- renderUI({
-    req(input$raw_plot_hover)
-    point_raw <- 
-      nearPoints(raw_screens, # internal package object
-                 input$raw_plot_hover, # takes reactive dependency
-                 threshold = 5, 
-                 maxpoints = 1, 
-                 addDist = TRUE)
-
-      style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.2); ",
-                      "left:", input$raw_plot_hover$range$left, "px; top:", 
-                      input$raw_plot_hover$range$top+100, "px;")
-
-      # actual tooltip created as wellPanel
-      wellPanel(
-        style = style,
-        p(HTML(paste0("<b> Channel </b>", point_raw$channel_f, "<br/>",
-                      "<b> Dye </b>", point_raw$dye, "<br/>",
-                      "<b> Sample </b>", point_raw$type, "<br/>",
-                      "<b> Temperature </b>", point_raw$Temperature, " ºC<br/>"))))
-    })
 
 
 # ##### download report

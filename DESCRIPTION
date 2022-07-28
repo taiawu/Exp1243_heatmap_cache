@@ -21,6 +21,7 @@ Imports:
     hrbrthemes,
     htmltools,
     magrittr,
+    pkgload,
     processx,
     shinipsum,
     shiny (>= 1.7.1),

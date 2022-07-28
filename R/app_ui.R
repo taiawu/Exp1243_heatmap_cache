@@ -14,60 +14,36 @@ app_ui <- function(request) {
     useShinyjs(),
     fluidPage( # can't take height = "100%"
       h2("protein-adaptive DSF data explorer"),
-      #tableOutput("mock_text_header"), ## description of the site
       fluidRow(column(8,
                       div(
-                        #div(style="display: inline-block; width: 40%;",
                            h4("Mouse over the plot below to browse and download dye screen data and conditions."),
-                          # ),
                         tableOutput("how_to_use")
-                      
-                      
-                        ##### download button -- not used currently
-                        # ,
-                        # div(style="display: inline-block; width: 20%;",
-                        #     downloadButton(label = "Download heatmap data", "download_heatmap_data")
-                        #     )
+
                         ),
 
-                      plotOutput("mock_heatmap", height = "800px", 
+                      plotOutput("mock_heatmap", height = "600px", 
                                  hover = hoverOpts("plot_hover",
-                                                   delay = 1000,
+                                                   delay = 500,
                                                    delayType = "debounce",
-                                                   clip = TRUE,
+                                                   clip = TRUE, # stop updating outside plot area
                                                    nullOutside = FALSE)) # keep assignments after leaving plot
-                      
                       ),
                column(4,
-                      #div(
-                        #div(style="display: inline-block; width: 40%;",
-                        h2(tableOutput("protein_title")),
-                        #)
-                        
-                        ##### download button -- not used currently
-                        #,
-                        # div(style="display: inline-block; width: 20%;",
-                        #     downloadButton(label = "Download displayed report", "download_report")
-                        # )
-                        
-                        #),
-                      
-                      panel(style = "overflow-y:scroll; max-height: 800px; position:relative; align: centre",
+                      h4(tableOutput("protein_title")),
+                     
+                      panel(style = "overflow-y:scroll; max-height: 600px; position:relative; align: centre",
                             tableOutput("protein_header"),
+                             plotOutput("mock_raw_plot"),
+                            #uiOutput("raw_hover_info"),
                            
-                             plotOutput("mock_raw_plot", hover = hoverOpts("raw_plot_hover", 
-                                                                           delay = 200, 
-                                                                           nullOutside = TRUE)), 
-                            uiOutput("raw_hover_info"),
-                           
-                            #h3("Methods"),
+                            #  plotOutput("mock_raw_plot", hover = hoverOpts("raw_plot_hover", 
+                            #                                                delay = 50, 
+                            #                                                clip = TRUE,
+                            #                                                nullOutside = TRUE)), 
+                            # uiOutput("raw_hover_info"),
+
                             tableOutput("protein_source"),
-                            tableOutput("methods")#,
-                            #tableOutput("mock_text")
-                            # ,
-                            #  plotOutput("chem_struc")
-                            # ,
-                            # heading = "Education", status = "primary")
+                            tableOutput("methods")
                       ) # panel
                       ) # column
       ) # fluidRow
