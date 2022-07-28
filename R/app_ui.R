@@ -30,7 +30,12 @@ app_ui <- function(request) {
                         #     )
                         ),
 
-                      plotOutput("mock_heatmap", height = "800px", hover = hoverOpts("plot_hover", delay = 500, nullOutside = FALSE))
+                      plotOutput("mock_heatmap", height = "800px", 
+                                 hover = hoverOpts("plot_hover",
+                                                   delay = 1000,
+                                                   delayType = "debounce",
+                                                   clip = TRUE,
+                                                   nullOutside = FALSE)) # keep assignments after leaving plot
                       
                       ),
                column(4,
@@ -50,7 +55,9 @@ app_ui <- function(request) {
                       panel(style = "overflow-y:scroll; max-height: 800px; position:relative; align: centre",
                             tableOutput("protein_header"),
                            
-                             plotOutput("mock_raw_plot", hover = hoverOpts("raw_plot_hover", delay = 200, nullOutside = TRUE)), 
+                             plotOutput("mock_raw_plot", hover = hoverOpts("raw_plot_hover", 
+                                                                           delay = 200, 
+                                                                           nullOutside = TRUE)), 
                             uiOutput("raw_hover_info"),
                            
                             #h3("Methods"),
