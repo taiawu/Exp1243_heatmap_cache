@@ -64,8 +64,8 @@ plot_raw <-
                     y = "RFU") +
       
       # themes
-      hrbrthemes::theme_ipsum() +
-      
+      hrbrthemes::theme_ipsum(base_size = 16) +
+      ggplot2::theme(aspect.ratio = 1/1.617) +
       # axis styling
       ggplot2::scale_x_continuous(breaks = .x_breaks)
     

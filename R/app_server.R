@@ -107,9 +107,7 @@ app_server <- function(input, output, session) {
 
       protein_dye_raw() %>%
             plot_raw(  . ,
-                       .line_size = 0.6) +
-            hrbrthemes::theme_ipsum(base_size = 16) +
-        theme(aspect.ratio = 1/1.617)
+                       .line_size = 0.6) 
     })
   
   
