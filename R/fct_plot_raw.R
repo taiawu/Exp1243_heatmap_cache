@@ -64,7 +64,8 @@ plot_raw <-
                     y = "RFU") +
       
       # themes
-      hrbrthemes::theme_ipsum(base_size = 16) +
+      hrbrthemes::theme_ipsum(base_family = "Helvetica", # default Arial Narrow incompatible with Shiny io
+                              base_size = 16) +
       ggplot2::theme(aspect.ratio = 1/1.617) +
       # axis styling
       ggplot2::scale_x_continuous(breaks = .x_breaks)
